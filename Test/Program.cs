@@ -16,7 +16,7 @@ namespace Test
             var DepremV2 = dataManager.DatalariKoordinatlarinaGoreGetir(25, 20);
 
 
-
+            //ss
 
             var DepremV3 = dataManager.DatalariKoordinatlarinaGoreGetir(14, 20);
             //1.parametre koordinat x , 2.parametre koordinat y, 3.parametre Baslangic ID, 4. parametre SonId
