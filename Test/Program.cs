@@ -69,7 +69,7 @@ namespace Test
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Veriler;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-IDOOIL9;Database=veriler;Trusted_Connection=True");
         }
 
         public DbSet<Data> Veriler { get; set; }
