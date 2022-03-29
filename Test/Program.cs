@@ -12,47 +12,35 @@ namespace Test
         {
             DataManager dataManager = new DataManager();
 
-            var DepremV1 = dataManager.DatalariKoordinatlarinaGoreGetir(30, 40);
-            var DepremV2 = dataManager.DatalariKoordinatlarinaGoreGetir(25, 20);
-
-
-            //ss
-
-            var DepremV3 = dataManager.DatalariKoordinatlarinaGoreGetir(14, 20);
             //1.parametre koordinat x , 2.parametre koordinat y, 3.parametre Baslangic ID, 4. parametre SonId
-            var depremV1IkinciSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(30, 40, 341, 629);
-            var depremV1UcuncuSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(30, 40, 629, 4502);
-            var depremV1DorduncuSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(30, 40, 4502, 4843);
 
-            var idsiAyiklanmisVeriler = IdAyiklama(DepremV1, 341);
+            var depremV1BirinciSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(40, 50, 0, 3401);
+            var depremV1IkinciSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(40, 50, 3401, 4502);
+            var depremV1UcuncuSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(40, 50, 4502, 7503);  
 
-            var normalIdsigma = dataManager.SigmaMaxV3(idsiAyiklanmisVeriler);
+            var normalIdsigma = dataManager.SigmaMaxV3(depremV1BirinciSonuc);
             var aralikliVerilenIdIkinciSonucSigma = dataManager.SigmaMaxV3(depremV1IkinciSonuc);
             var aralikliVerilenIdUcuncuSonucSigma = dataManager.SigmaMaxV3(depremV1UcuncuSonuc);
-            var aralikliVerilenIdDorduncuSonucSigma = dataManager.SigmaMaxV3(depremV1DorduncuSonuc);
 
             Console.WriteLine("sigma değer: " + normalIdsigma);
             Console.WriteLine("sigma değer: " + aralikliVerilenIdIkinciSonucSigma);
             Console.WriteLine("sigma değer: " + aralikliVerilenIdUcuncuSonucSigma);
-            Console.WriteLine("sigma değer: " + aralikliVerilenIdDorduncuSonucSigma);
-        }
 
+            Console.WriteLine("*************************************************************************************");
 
+            var depremV2BirinciSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(20, 70, 7503, 10904);
+            var depremV2IkinciSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(20, 70, 10904, 12005);
+            var depremV2UcuncuSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(20, 70, 12005, 15006);
 
-        public static List<Data> IdAyiklama(List<Data> Depremler, int id)
-        {
-            List<Data> dataList = new List<Data>();
-            foreach (var deprem in Depremler)
-            {
-                dataList.Add(deprem);
-                if (deprem.Id == id)
-                {
-                    break;
-                }
-            }
-            return dataList;
-        }
+            var normalIdsigmaV2 = dataManager.SigmaMaxV3(depremV1BirinciSonuc);
+            var aralikliVerilenIdIkinciSonucSigmaV2 = dataManager.SigmaMaxV3(depremV1IkinciSonuc);
+            var aralikliVerilenIdUcuncuSonucSigmaV2 = dataManager.SigmaMaxV3(depremV1UcuncuSonuc);
 
+            Console.WriteLine("sigma değer: " + normalIdsigmaV2);
+            Console.WriteLine("sigma değer: " + aralikliVerilenIdIkinciSonucSigmaV2);
+            Console.WriteLine("sigma değer: " + aralikliVerilenIdUcuncuSonucSigmaV2);
+
+        }      
     }
 
     class Data
@@ -69,7 +57,9 @@ namespace Test
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-IDOOIL9;Database=veriler;Trusted_Connection=True");
+            //optionsBuilder.UseSqlServer(@"Server=ELMA\SQLEXPRESS;Database=veriler;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=veriler;Trusted_Connection=True");
+            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-IDOOIL9\SQLEXPRESS;Database=veriler;Trusted_Connection=True");
         }
 
         public DbSet<Data> Veriler { get; set; }
@@ -99,6 +89,11 @@ namespace Test
         public List<Data> DatalariKoordinatlarinaGoreGetir(int koordinatX, int koordinatY)
         {
             return efDataDal.GetAll(d => d.KoordinatX == koordinatX && d.KoordinatY == koordinatY);
+        }
+
+        public List<Data> DatalariKoordinatlarinaVeIdsineGoreGetir(int koordinatX, int koordinatY, int id)
+        {
+            return efDataDal.GetAll(d => d.KoordinatX == koordinatX && d.KoordinatY == koordinatY && (d.Id>0 && d.Id <= id));
         }
 
 
