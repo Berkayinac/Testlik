@@ -18,11 +18,11 @@ namespace Test
             var depremV1IkinciSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(40, 50, 3401, 4502);
             var depremV1UcuncuSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(40, 50, 4502, 7503);  
 
-            var normalIdsigma = dataManager.SigmaMaxV3(depremV1BirinciSonuc);
+            var aralikliVerilenIdBirinciSonucSigma = dataManager.SigmaMaxV3(depremV1BirinciSonuc);
             var aralikliVerilenIdIkinciSonucSigma = dataManager.SigmaMaxV3(depremV1IkinciSonuc);
             var aralikliVerilenIdUcuncuSonucSigma = dataManager.SigmaMaxV3(depremV1UcuncuSonuc);
 
-            Console.WriteLine("sigma değer: " + normalIdsigma);
+            Console.WriteLine("sigma değer: " + aralikliVerilenIdBirinciSonucSigma);
             Console.WriteLine("sigma değer: " + aralikliVerilenIdIkinciSonucSigma);
             Console.WriteLine("sigma değer: " + aralikliVerilenIdUcuncuSonucSigma);
 
@@ -32,11 +32,11 @@ namespace Test
             var depremV2IkinciSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(20, 70, 10904, 12005);
             var depremV2UcuncuSonuc = dataManager.DatalariKoordinatlarinaVeIdAraliginaGoreGetir(20, 70, 12005, 15006);
 
-            var normalIdsigmaV2 = dataManager.SigmaMaxV3(depremV1BirinciSonuc);
-            var aralikliVerilenIdIkinciSonucSigmaV2 = dataManager.SigmaMaxV3(depremV1IkinciSonuc);
-            var aralikliVerilenIdUcuncuSonucSigmaV2 = dataManager.SigmaMaxV3(depremV1UcuncuSonuc);
+            var aralikliVerilenIdBirinciSonucSigmaV2 = dataManager.SigmaMaxV3(depremV2BirinciSonuc);
+            var aralikliVerilenIdIkinciSonucSigmaV2 = dataManager.SigmaMaxV3(depremV2IkinciSonuc);
+            var aralikliVerilenIdUcuncuSonucSigmaV2 = dataManager.SigmaMaxV3(depremV2UcuncuSonuc);
 
-            Console.WriteLine("sigma değer: " + normalIdsigmaV2);
+            Console.WriteLine("sigma değer: " + aralikliVerilenIdBirinciSonucSigmaV2);
             Console.WriteLine("sigma değer: " + aralikliVerilenIdIkinciSonucSigmaV2);
             Console.WriteLine("sigma değer: " + aralikliVerilenIdUcuncuSonucSigmaV2);
 
@@ -90,12 +90,6 @@ namespace Test
         {
             return efDataDal.GetAll(d => d.KoordinatX == koordinatX && d.KoordinatY == koordinatY);
         }
-
-        public List<Data> DatalariKoordinatlarinaVeIdsineGoreGetir(int koordinatX, int koordinatY, int id)
-        {
-            return efDataDal.GetAll(d => d.KoordinatX == koordinatX && d.KoordinatY == koordinatY && (d.Id>0 && d.Id <= id));
-        }
-
 
         public List<Data> DatalariKoordinatlarinaVeIdAraliginaGoreGetir(int koordinatX, int koordinatY, int baslangicId, int sonId)
         {
